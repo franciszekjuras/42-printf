@@ -6,7 +6,7 @@
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:03:46 by fjuras            #+#    #+#             */
-/*   Updated: 2022/03/12 19:50:47 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/03/14 20:23:08 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ typedef struct s_printf_format
 }	t_printf_format;
 
 int				ft_put_format_fd(int fd, t_printf_format format);
-t_printf_format	ft_next_format(const char **beg, const char **end);
+t_printf_format	ft_scan_format(char **pos, char **passed);
 
 #endif

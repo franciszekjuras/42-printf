@@ -6,7 +6,7 @@
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 09:58:09 by fjuras            #+#    #+#             */
-/*   Updated: 2022/03/12 20:31:27 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/03/14 19:47:03 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ int	ft_fprintf(int fd, const char *fstr)
 	count = 0;
 	write_err = 0;
 	pos = fstr;
-	format = ft_next_format(&pos, &passed);
+	format = ft_scan_format(&pos, &passed);
 	while (format.valid)
 	{
 		count += wcheck(write(fd, fstr, passed - fstr), &write_err);
 		count += wcheck(ft_put_format_fd(fd, format), &write_err);
 		fstr = pos;
-		format = ft_next_format(&pos, &passed);
+		format = ft_scan_format(&pos, &passed);
 	}
 	count += wcheck(write(fd, fstr, passed - fstr), &write_err);
 	if (write_err)

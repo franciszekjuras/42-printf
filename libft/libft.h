@@ -6,13 +6,22 @@
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 18:38:47 by fjuras            #+#    #+#             */
-/*   Updated: 2022/03/12 20:25:38 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/03/14 20:08:06 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <stddef.h>
+
+typedef unsigned long long	t_ull;
+
+typedef enum e_strtoi_err
+{
+	FT_STRTOI_BASE = 0x01,
+	FT_STRTOI_OVERFLOW = 0x02,
+	FT_STRTOI_EMPTY = 0x04
+}	t_strtoi_err;
 
 unsigned int	ft_absu(int n);
 int				ft_isascii(int c);
@@ -37,6 +46,15 @@ int				ft_strempty(const char *s);
 int				ft_toupper(int c);
 int				ft_tolower(int c);
 int				ft_atoi(const char *np);
+
+int				ft_chartonum_base(char c, int base);
+int				ft_strtoi_parse_prefix_e( char **npp, int *base, int *err);
+long long		ft_strtoll_e(
+					const char *np, char **ep, int base, int *err);
+t_ull			ft_strtoull_e(
+					const char *np, char **ep, int base, int *err);
+long long		ft_strtonum(
+					char **npp, long long min, long long max, int *err);
 
 /**
  * @brief 

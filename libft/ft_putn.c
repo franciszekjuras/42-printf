@@ -6,7 +6,7 @@
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 12:44:58 by fjuras            #+#    #+#             */
-/*   Updated: 2022/03/12 14:56:33 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/03/14 16:13:55 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	ft_putstrn_fd(char *s, int fd)
 
 int	ft_putendln_fd(char *s, int fd)
 {
-	int r1;
-	int r2;
+	int	r1;
+	int	r2;
 
 	r1 = ft_putstrn_fd(s, fd);
 	r2 = write(fd, "\n", 1);
