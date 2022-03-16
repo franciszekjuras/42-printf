@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_format.c                                        :+:      :+:    :+:   */
+/*   ft_parse_format.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:20:47 by fjuras            #+#    #+#             */
-/*   Updated: 2022/03/14 20:27:33 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/03/15 10:48:07 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#include <unistd.h>
 #include <limits.h>
+#include <stdarg.h>
+#include "libft/libft.h"
 #include "ft_printf_utils.h"
-#include <stdio.h>
+#include "ft_printf.h"
 
-void	ft_print_t_printf_format(t_printf_format format)
+static void	ft_print_t_printf_format(t_printf_format format)
 {
 	dprintf(2, "t_printf_format:\n"
 		"flags: %x\n"
@@ -27,18 +29,7 @@ void	ft_print_t_printf_format(t_printf_format format)
 		format.specifier, format.valid);
 }
 
-int	ft_put_format_fd(int fd, t_printf_format format)
-{
-	if (format.specifier == 'c')
-		return (ft_putcharn_fd('a', fd));
-	if (format.specifier == 's')
-		return (ft_putstrn_fd("some string", fd));
-	if (format.specifier == '%')
-		return (ft_putcharn_fd('%', fd));	
-	return (-1);
-}
-
-static int ft_scan_flags(char **pos)
+static int	ft_scan_flags(char **pos)
 {
 	const char	*crr;
 	int			flagidx;
@@ -57,27 +48,53 @@ static int ft_scan_flags(char **pos)
 	return (flags);
 }
 
-void	ft_parse_format(t_printf_format *format, char **pos)
+static int	ft_parse_number(
+	char **pos, t_ft_va_list *list, t_printf_format *format)
 {
-	int err;
-	int tmp;
+	int	n;
+	int	err;
 
+	err = 0;
+	if (**pos == '*')
+	{
+		n = va_arg(list->args, int);
+		*pos += 1;
+	}
+	else
+		n = ft_strtonum(pos, 0, INT_MAX, &err);
+	if (err)
+		return (-1);
+	if (n < 0)
+	{
+		if (format != 0)
+		{
+			format->flags |= FT_PRINTF_LJUST;
+			n = -n;
+		}
+		else
+			return (-1);
+	}
+	return (n);
+}
+
+static void	ft_parse_format(
+	t_printf_format *format, char **pos, t_ft_va_list *list)
+{
 	format->flags = ft_scan_flags(pos);	
-	err = -1;
-	if (ft_isdigit(**pos))
-		tmp = ft_strtonum(pos, 0, INT_MAX, &err);
-	if (!err)
-		format->width = tmp;
-	err = -1;
+	if (ft_isdigit(**pos) || **pos == '*')
+		format->width = ft_parse_number(pos, list, format);
+	else
+		format->width = -1;
 	if (**pos == '.')
 	{
-		if (ft_isdigit(*(++(*pos))))
-			tmp = ft_strtonum(pos, 0, INT_MAX, &err);
+		*pos += 1;
+		if (ft_isdigit(**pos) || **pos == '*')
+			format->precision = ft_parse_number(pos, list, 0);
 		else
 			format->precision = 0;
-		if (!err)
-			format->precision = tmp;
 	}
+	else
+		format->precision = -1;
 	if (**pos == '%' || ft_isinset(**pos, FT_PRINTF_SPECS))
 	{
 		format->specifier = *((*pos)++);
@@ -86,7 +103,7 @@ void	ft_parse_format(t_printf_format *format, char **pos)
 	ft_print_t_printf_format(*format);
 }
 
-t_printf_format	ft_scan_format(char **pos, char **passed)
+t_printf_format	ft_scan_format(char **pos, char **passed, t_ft_va_list *list)
 {
 	t_printf_format format;
 
@@ -101,7 +118,7 @@ t_printf_format	ft_scan_format(char **pos, char **passed)
 		if (**pos == '\0')
 			return (format);
 		(*pos)++;
-		ft_parse_format(&format, pos);
+		ft_parse_format(&format, pos, list);
 	}
 	return (format);
 }

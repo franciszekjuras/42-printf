@@ -6,14 +6,15 @@
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 09:58:09 by fjuras            #+#    #+#             */
-/*   Updated: 2022/03/14 19:47:03 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/03/15 10:29:30 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <unistd.h>
+#include <stdarg.h>
 #include "libft/libft.h"
 #include "ft_printf_utils.h"
+#include "ft_printf.h"
 
 static ssize_t wcheck(ssize_t write_ret, int *err)
 {
@@ -22,7 +23,8 @@ static ssize_t wcheck(ssize_t write_ret, int *err)
 	return (write_ret);
 }
 
-int	ft_fprintf(int fd, const char *fstr)
+
+int	ft_vdprintf(int fd, const char *fstr, t_ft_va_list *list)
 {
 	const char		*pos;
 	const char		*passed;
@@ -33,16 +35,27 @@ int	ft_fprintf(int fd, const char *fstr)
 	count = 0;
 	write_err = 0;
 	pos = fstr;
-	format = ft_scan_format(&pos, &passed);
+	format = ft_scan_format((char **) &pos, (char **) &passed, list);
 	while (format.valid)
 	{
 		count += wcheck(write(fd, fstr, passed - fstr), &write_err);
-		count += wcheck(ft_put_format_fd(fd, format), &write_err);
+		count += wcheck(ft_put_format_fd(fd, format, list), &write_err);
 		fstr = pos;
-		format = ft_scan_format(&pos, &passed);
+		format = ft_scan_format((char **) &pos, (char **) &passed, list);
 	}
 	count += wcheck(write(fd, fstr, passed - fstr), &write_err);
 	if (write_err)
 		return (-1);
 	return (count);
+}
+
+int	ft_dprintf(int fd, const char *fstr, ...)
+{
+	int				r;
+	t_ft_va_list	list;
+
+	va_start(list.args, fstr);
+	r = ft_vdprintf(fd, fstr, &list);
+	va_end(list.args);
+	return (r);
 }

@@ -1,7 +1,7 @@
 NAME = libftprintf.a
 
 FILES = \
-	ft_printf ft_format
+	ft_printf ft_put_format ft_parse_format
 
 OFILES = $(FILES:%=%.o)
 
@@ -14,7 +14,7 @@ $(NAME): $(OFILES) libft/libft.a
 	ar rcs $@ $(OFILES)
 
 $(OFILES): %.o: %.c
-	gcc $(CFLAGS) -I ./libft -c $< -o $@
+	gcc $(CFLAGS) -c $< -o $@
 
 libft/libft.a: FORCE
 	make -C libft libft.a

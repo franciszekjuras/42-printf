@@ -1,41 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_math.c                                          :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/01 11:33:57 by fjuras            #+#    #+#             */
-/*   Updated: 2022/03/16 12:47:28 by fjuras           ###   ########.fr       */
+/*   Created: 2022/02/28 16:07:34 by fjuras            #+#    #+#             */
+/*   Updated: 2022/03/16 13:44:18 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-unsigned int	ft_absu(int n)
+static int	ft_atoi_ll(const char *np, int i, int s, int base)
 {
-	if (n < 0)
-		return (((unsigned int) -(n + 1)) + 1u);
-	return ((unsigned int) n);
+	int	r;
+
+	i--;
+	r = 0;
+	while (i >= 0)
+	{
+		r += s * (np[i] - '0');
+		s *= base;
+		i--;
+	}
+	return (r);
 }
 
-unsigned long long	ft_absull(long long n)
+int	ft_atoi(const char *np)
 {
-	if (n < 0)
-		return (((unsigned long long) -(n + 1)) + 1ull);
-	return ((unsigned long long) n);
-}
+	int	s;
+	int	i;
 
-int	ft_max(int n1, int n2)
-{
-	if (n1 > n2)
-		return (n1);
-	return (n2);
-}
-
-int	ft_min(int n1, int n2)
-{
-	if (n1 < n2)
-		return (n1);
-	return (n2);
+	while (ft_isspace(*np))
+		np++;
+	s = 1;
+	if (*np == '-')
+		s = -1;
+	if (*np == '-' || *np == '+')
+		np++;
+	i = 0;
+	while (ft_isdigit(np[i]))
+		i++;
+	return (ft_atoi_ll(np, i, s, 10));
 }

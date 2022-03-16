@@ -1,48 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnum.c                                        :+:      :+:    :+:   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 16:07:34 by fjuras            #+#    #+#             */
-/*   Updated: 2022/03/12 09:27:25 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/03/16 14:22:05 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_atoi_ll(const char *np, int i, int s, int base)
+char	ft_numtochar(int n)
 {
-	int	r;
-
-	i--;
-	r = 0;
-	while (i >= 0)
-	{
-		r += s * (np[i] - '0');
-		s *= base;
-		i--;
-	}
-	return (r);
-}
-
-int	ft_atoi(const char *np)
-{
-	int	s;
-	int	i;
-
-	while (ft_isspace(*np))
-		np++;
-	s = 1;
-	if (*np == '-')
-		s = -1;
-	if (*np == '-' || *np == '+')
-		np++;
-	i = 0;
-	while (ft_isdigit(np[i]))
-		i++;
-	return (ft_atoi_ll(np, i, s, 10));
+	if (n < 0 || n > 36)
+		return ('#');
+	if (n <= 9)
+		return ('0' + n);
+	return ('a' + (n - 10));
 }
 
 char	*ft_itoa(int n)
@@ -65,4 +41,32 @@ char	*ft_itoa(int n)
 		buf[i--] = '-';
 	i++;
 	return (ft_strdup(buf + i));
+}
+
+char	*ft_lltoa_base_buf(long long n, int base, char *buf, int size)
+{
+	unsigned long long	un;
+	char				*pos;
+
+	un = ft_absull(n);
+	pos = ft_ulltoa_base_buf(un, base, buf, size);
+	if (pos > buf && n < 0)
+		*(--pos) = '-';
+	return (pos);
+}
+
+char	*ft_ulltoa_base_buf(unsigned long long n, int base, char *buf, int size)
+{
+	char	*pos;
+
+	pos = buf + size - 1;
+	*(--pos) = '\0';
+	if (n == 0)
+		*(--pos) = '0';
+	while (n != 0 && pos >= buf)
+	{
+		*(--pos) = ft_numtochar(n % base);
+		n /= base;
+	}
+	return (pos);
 }

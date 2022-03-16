@@ -6,7 +6,7 @@
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 12:44:58 by fjuras            #+#    #+#             */
-/*   Updated: 2022/03/14 16:13:55 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/03/15 16:17:20 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,25 @@
 int	ft_putcharn_fd(char c, int fd)
 {
 	return (write(fd, &c, 1));
+}
+
+int	ft_putncharn_fd(char c, int n, int fd)
+{
+	char	buffer[64];
+	int		total;
+	int		r;
+
+	total = 0;
+	ft_memset(buffer, c, ft_min(64, n));
+	while (n > 0)
+	{
+		r = write(fd, buffer, ft_min(64, n));
+		n -= 64;
+		if (r < 0)
+			return (-1);
+		total += r;
+	}
+	return (total);
 }
 
 int	ft_putstrn_fd(char *s, int fd)
