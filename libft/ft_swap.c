@@ -6,13 +6,13 @@
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:14:07 by fjuras            #+#    #+#             */
-/*   Updated: 2022/03/16 21:20:17 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/03/17 15:54:41 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	swapi(int *a, int *b)
+void	ft_swapi(int *a, int *b)
 {
 	int	c;
 

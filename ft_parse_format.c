@@ -6,7 +6,7 @@
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:20:47 by fjuras            #+#    #+#             */
-/*   Updated: 2022/03/15 10:48:07 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/03/17 16:14:58 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ static void	ft_parse_format(
 		format->specifier = *((*pos)++);
 		format->valid = 1;
 	}
-	ft_print_t_printf_format(*format);
+	(void) ft_print_t_printf_format;
+	// ft_print_t_printf_format(*format);
 }
 
 t_printf_format	ft_scan_format(char **pos, char **passed, t_ft_va_list *list)

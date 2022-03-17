@@ -6,10 +6,11 @@
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:20:47 by fjuras            #+#    #+#             */
-/*   Updated: 2022/03/16 22:02:03 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/03/17 16:21:19 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <limits.h>
 #include <stdarg.h>
 #include <unistd.h>
@@ -86,7 +87,7 @@ static int	ft_putnbrcmn_format_fd(
 static unsigned long long	ft_putunsigned_format_fd(
 	t_ft_va_list *list, int fd, t_printf_format format)
 {
-	char				buf[128];
+	char				buf[FT_PRINTF_BUF];
 	unsigned long long	nbr;
 	char				*prefix;
 	char				*content;
@@ -95,13 +96,13 @@ static unsigned long long	ft_putunsigned_format_fd(
 	if (format.precision == 0 && nbr == 0)
 		content = "";
 	else if (format.specifier == 'x' || format.specifier == 'X')
-		content = ft_ulltoa_base_buf(nbr, 16, buf, 128);
+		content = ft_ulltoa_base_buf(nbr, 16, buf, FT_PRINTF_BUF);
 	else if (format.specifier == 'u')
-		content = ft_ulltoa_base_buf(nbr, 10, buf, 128);
+		content = ft_ulltoa_base_buf(nbr, 10, buf, FT_PRINTF_BUF);
 	else if (format.specifier == 'o')
-		content = ft_ulltoa_base_buf(nbr, 8, buf, 128);
+		content = ft_ulltoa_base_buf(nbr, 8, buf, FT_PRINTF_BUF);
 	else if (format.specifier == 'b')
-		content = ft_ulltoa_base_buf(nbr, 2, buf, 128);
+		content = ft_ulltoa_base_buf(nbr, 2, buf, FT_PRINTF_BUF);
 	prefix = "";
 	if (format.flags & FT_PRINTF_ALT && nbr != 0)
 		prefix = ft_getnumprefix(format.specifier);
@@ -111,7 +112,7 @@ static unsigned long long	ft_putunsigned_format_fd(
 static int	ft_putsigned_format_fd(
 	t_ft_va_list *list, int fd, t_printf_format format)
 {
-	char		buf[128];
+	char		buf[FT_PRINTF_BUF];
 	long long	nbr;
 	int			sign;
 	char		*prefix;
@@ -120,8 +121,11 @@ static int	ft_putsigned_format_fd(
 	nbr = va_arg(list->args, int);
 	sign = 1;
 	if (nbr < 0)
-		sign = -1;		
-	content = ft_ulltoa_base_buf(ft_absull(nbr), 10, buf, 128);
+		sign = -1;
+	if (format.precision == 0 && nbr == 0)
+		content = "";
+	else
+		content = ft_ulltoa_base_buf(ft_absull(nbr), 10, buf, FT_PRINTF_BUF);
 	prefix = "";
 	if (sign < 0)
 		prefix = "-";
@@ -145,7 +149,7 @@ int	ft_put_format_fd(int fd, t_printf_format format, t_ft_va_list *list)
 		return (ft_putstr_format_fd(va_arg(list->args, char *), fd, format));
 	else if (ft_isinset(format.specifier, "di"))
 		return (ft_putsigned_format_fd(list, fd, format));
-	else if (ft_isinset(format.specifier, "uxXb"))
+	else if (ft_isinset(format.specifier, "uxXob"))
 		return (ft_putunsigned_format_fd(list, fd, format));
 	else if (format.specifier == '%')
 		return (ft_putcharn_fd('%', fd));
