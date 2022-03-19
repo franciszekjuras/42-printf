@@ -6,7 +6,7 @@
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 09:58:09 by fjuras            #+#    #+#             */
-/*   Updated: 2022/03/17 16:36:44 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/03/19 16:25:29 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,12 @@
 #include "ft_printf_utils.h"
 #include "ft_printf.h"
 
-static ssize_t wcheck(ssize_t write_ret, int *err)
+static ssize_t	wcheck(ssize_t write_ret, int *err)
 {
 	if (write_ret < 0)
 		*err = -1;
 	return (write_ret);
 }
-
 
 int	ft_vdprintf(int fd, const char *fstr, t_ft_va_list *list)
 {

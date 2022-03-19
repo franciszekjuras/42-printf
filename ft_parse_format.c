@@ -6,7 +6,7 @@
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:20:47 by fjuras            #+#    #+#             */
-/*   Updated: 2022/03/17 16:14:58 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/03/19 16:24:49 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,6 @@
 #include "libft/libft.h"
 #include "ft_printf_utils.h"
 #include "ft_printf.h"
-
-static void	ft_print_t_printf_format(t_printf_format format)
-{
-	dprintf(2, "t_printf_format:\n"
-		"flags: %x\n"
-		"width: %d\n"
-		"prcsn: %d\n"
-		"spcfr: %c\n"
-		"valid: %d\n",
-		format.flags, format.width, format.precision,
-		format.specifier, format.valid);
-}
 
 static int	ft_scan_flags(char **pos)
 {
@@ -80,7 +68,7 @@ static int	ft_parse_number(
 static void	ft_parse_format(
 	t_printf_format *format, char **pos, t_ft_va_list *list)
 {
-	format->flags = ft_scan_flags(pos);	
+	format->flags = ft_scan_flags(pos);
 	if (ft_isdigit(**pos) || **pos == '*')
 		format->width = ft_parse_number(pos, list, format);
 	else
@@ -100,13 +88,11 @@ static void	ft_parse_format(
 		format->specifier = *((*pos)++);
 		format->valid = 1;
 	}
-	(void) ft_print_t_printf_format;
-	// ft_print_t_printf_format(*format);
 }
 
 t_printf_format	ft_scan_format(char **pos, char **passed, t_ft_va_list *list)
 {
-	t_printf_format format;
+	t_printf_format	format;
 
 	format.valid = 0;
 	format.width = -1;

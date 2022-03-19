@@ -6,7 +6,7 @@
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:03:46 by fjuras            #+#    #+#             */
-/*   Updated: 2022/03/17 16:38:05 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/03/19 16:26:11 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 typedef struct s_ft_va_list
 {
-	va_list args;
+	va_list	args;
 }	t_ft_va_list;
 
 int	ft_dprintf(int fd, const char *fstr, ...);

@@ -6,7 +6,7 @@
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 23:03:34 by fjuras            #+#    #+#             */
-/*   Updated: 2022/03/14 20:14:00 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/03/19 16:27:39 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static unsigned long long	ft_strtoll_raw_pos_e_(
 	}
 	while (c >= 0)
 		c = ft_chartonum_base(*np++, base);
-	*ep = (char *) (np - 1);
+	*ep = (char *)(np - 1);
 	return (r);
 }
 
@@ -84,7 +84,7 @@ static long long	ft_strtoll_raw_neg_e_(
 	}
 	while (c >= 0)
 		c = ft_chartonum_base(*np++, base);
-	*ep = (char *) (np - 1);
+	*ep = (char *)(np - 1);
 	return (r);
 }
 

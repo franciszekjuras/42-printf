@@ -6,7 +6,7 @@
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 23:03:34 by fjuras            #+#    #+#             */
-/*   Updated: 2022/03/14 20:15:24 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/03/19 16:28:06 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static unsigned long long	ft_strtoull_raw_e_(
 	}
 	while (c >= 0)
 		c = ft_chartonum_base(*np++, base);
-	*ep = (char *) (np - 1);
+	*ep = (char *)(np - 1);
 	return (r);
 }
 

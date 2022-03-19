@@ -1,6 +1,6 @@
 NAME = libftprintf.a
 
-FILES =	ft_printf ft_put_format ft_parse_format
+FILES =	ft_printf ft_put_format ft_parse_format ft_putnbr_format
 
 OFILES = $(FILES:%=%.o)
 

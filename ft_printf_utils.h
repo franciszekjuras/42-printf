@@ -6,7 +6,7 @@
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:03:46 by fjuras            #+#    #+#             */
-/*   Updated: 2022/03/19 15:36:33 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/03/19 16:23:40 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,17 @@ typedef struct s_printf_format
 	char	valid;
 }	t_printf_format;
 
-int				ft_put_format_fd(
-					int fd, t_printf_format format, t_ft_va_list *list);
-t_printf_format	ft_scan_format(char **pos, char **passed, t_ft_va_list *list);
+int					ft_put_format_fd(
+						int fd, t_printf_format format, t_ft_va_list *list);
+t_printf_format		ft_scan_format(
+						char **pos, char **passed, t_ft_va_list *list);
+int					ft_putstr_format_fd(
+						char *str, int fd, t_printf_format format);
+unsigned long long	ft_putunsigned_format_fd(
+						t_ft_va_list *list, int fd, t_printf_format format);
+int					ft_putsigned_format_fd(
+						t_ft_va_list *list, int fd, t_printf_format format);
+int					ft_putptr_format_fd(
+						void *ptr, int fd, t_printf_format format);
 
 #endif
