@@ -6,7 +6,7 @@
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:20:47 by fjuras            #+#    #+#             */
-/*   Updated: 2022/03/17 16:21:19 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/03/19 16:05:52 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,15 @@
 #include "ft_printf_utils.h"
 #include "ft_printf.h"
 
-static int	ft_putstr_format_fd(
-	char *str, int fd, t_printf_format format)
+static int	ft_putstr_format_fd(char *str, int fd, t_printf_format format)
 {
 	int		len;
 	int		pad;
 	int		r[2];
 
-	if (format.specifier == 1)
+	if (str == 0)
+		str = "(null)";
+	if (format.specifier == 'c')
 		len = 1;
 	else if (format.precision >= 0)
 		len = ft_strnlen(str, format.precision);
@@ -103,10 +104,12 @@ static unsigned long long	ft_putunsigned_format_fd(
 		content = ft_ulltoa_base_buf(nbr, 8, buf, FT_PRINTF_BUF);
 	else if (format.specifier == 'b')
 		content = ft_ulltoa_base_buf(nbr, 2, buf, FT_PRINTF_BUF);
+	if (format.specifier == 'X')
+		content = ft_strtoupper(content);
 	prefix = "";
 	if (format.flags & FT_PRINTF_ALT && nbr != 0)
 		prefix = ft_getnumprefix(format.specifier);
-	return ft_putnbrcmn_format_fd(prefix, content, fd, format);
+	return (ft_putnbrcmn_format_fd(prefix, content, fd, format));
 }
 
 static int	ft_putsigned_format_fd(
@@ -133,7 +136,24 @@ static int	ft_putsigned_format_fd(
 		prefix = "+";
 	else if (format.flags & FT_PRINTF_SPACE)
 		prefix = " ";
-	return ft_putnbrcmn_format_fd(prefix, content, fd, format);
+	return (ft_putnbrcmn_format_fd(prefix, content, fd, format));
+}
+
+static int	ft_putptr_format_fd(void *ptr, int fd, t_printf_format format)
+{
+	unsigned long long	ptri;
+	char				*content;
+	char				buf[FT_PRINTF_BUF];
+
+	if (ptr == 0)
+	{		
+		format.precision = -1;
+		return (ft_putstr_format_fd("(nil)", fd, format));
+	}
+	ptri = (unsigned long long) ptr;
+	format.flags &= FT_PRINTF_LJUST;
+	content = ft_ulltoa_base_buf(ptri, 16, buf, FT_PRINTF_BUF);
+	return (ft_putnbrcmn_format_fd("0x", content, fd, format));
 }
 
 int	ft_put_format_fd(int fd, t_printf_format format, t_ft_va_list *list)
@@ -151,6 +171,8 @@ int	ft_put_format_fd(int fd, t_printf_format format, t_ft_va_list *list)
 		return (ft_putsigned_format_fd(list, fd, format));
 	else if (ft_isinset(format.specifier, "uxXob"))
 		return (ft_putunsigned_format_fd(list, fd, format));
+	else if (format.specifier == 'p')
+		return (ft_putptr_format_fd(va_arg(list->args, void *), fd, format));
 	else if (format.specifier == '%')
 		return (ft_putcharn_fd('%', fd));
 	return (-1);

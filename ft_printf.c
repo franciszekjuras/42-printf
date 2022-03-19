@@ -6,7 +6,7 @@
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 09:58:09 by fjuras            #+#    #+#             */
-/*   Updated: 2022/03/15 10:29:30 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/03/17 16:36:44 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,17 @@ int	ft_vdprintf(int fd, const char *fstr, t_ft_va_list *list)
 	if (write_err)
 		return (-1);
 	return (count);
+}
+
+int	ft_printf(const char *fstr, ...)
+{
+	int				r;
+	t_ft_va_list	list;
+
+	va_start(list.args, fstr);
+	r = ft_vdprintf(1, fstr, &list);
+	va_end(list.args);
+	return (r);
 }
 
 int	ft_dprintf(int fd, const char *fstr, ...)

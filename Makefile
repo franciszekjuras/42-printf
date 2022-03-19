@@ -1,13 +1,14 @@
 NAME = libftprintf.a
 
-FILES = \
-	ft_printf ft_put_format ft_parse_format
+FILES =	ft_printf ft_put_format ft_parse_format
 
 OFILES = $(FILES:%=%.o)
 
 CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
+
+bonus: $(NAME)
 
 $(NAME): $(OFILES) libft/libft.a
 	cp -f libft/libft.a $@

@@ -6,7 +6,7 @@
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:03:46 by fjuras            #+#    #+#             */
-/*   Updated: 2022/03/17 16:13:42 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/03/19 15:36:33 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "ft_printf.h"
 
 # define FT_PRINTF_FLAGS "-+ #0"
-# define FT_PRINTF_SPECS "csdiuxXob"
+# define FT_PRINTF_SPECS "csdiuxXobp"
 # define FT_PRINTF_BUF 128
 
 enum e_printf_flag
