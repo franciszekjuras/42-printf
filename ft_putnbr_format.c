@@ -6,13 +6,13 @@
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:20:47 by fjuras            #+#    #+#             */
-/*   Updated: 2022/03/19 16:25:51 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/04/26 21:02:42 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
 #include <unistd.h>
-#include "libft/libft.h"
+#include <libft/libft.h>
 #include "ft_printf_utils.h"
 #include "ft_printf.h"
 
@@ -118,11 +118,6 @@ int	ft_putptr_format_fd(void *ptr, int fd, t_printf_format format)
 	char				*content;
 	char				buf[FT_PRINTF_BUF];
 
-	if (ptr == 0)
-	{		
-		format.precision = -1;
-		return (ft_putstr_format_fd("(nil)", fd, format));
-	}
 	ptri = (unsigned long long) ptr;
 	format.flags &= FT_PRINTF_LJUST;
 	content = ft_ulltoa_base_buf(ptri, 16, buf, FT_PRINTF_BUF);
