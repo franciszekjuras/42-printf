@@ -6,6 +6,8 @@ OFILES = $(FILES:%=%.o)
 
 CFLAGS = -Wall -Wextra -Werror
 
+INC = -I.
+
 all: $(NAME)
 
 bonus: $(NAME)
@@ -15,7 +17,7 @@ $(NAME): $(OFILES) libft/libft.a
 	ar rcs $@ $(OFILES)
 
 $(OFILES): %.o: %.c
-	gcc $(CFLAGS) -c $< -o $@
+	gcc $(CFLAGS) $(INC) -c $< -o $@
 
 libft/libft.a: FORCE
 	make -C libft libft.a
