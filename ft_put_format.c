@@ -6,7 +6,7 @@
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:20:47 by fjuras            #+#    #+#             */
-/*   Updated: 2022/05/01 22:10:48 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/04/26 21:03:03 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,7 @@ int	ft_putstr_format_fd(char *str, int fd, t_printf_format format)
 	int		r[2];
 
 	if (str == 0)
-	{
 		str = "(null)";
-		if (format.precision >= 0 && format.precision < 6)
-			str = "";
-	}
 	if (format.specifier == 'c')
 		len = 1;
 	else if (format.precision >= 0)
