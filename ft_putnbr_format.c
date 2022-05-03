@@ -6,7 +6,7 @@
 /*   By: fjuras <fjuras@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 10:20:47 by fjuras            #+#    #+#             */
-/*   Updated: 2022/04/26 21:02:42 by fjuras           ###   ########.fr       */
+/*   Updated: 2022/05/03 16:32:19 by fjuras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	ft_putnbrcmn_format_fd(
 	return (r[0] + r[1] + r[2] + r[3]);
 }
 
-unsigned long long	ft_putunsigned_format_fd(
+int	ft_putunsigned_format_fd(
 	t_ft_va_list *list, int fd, t_printf_format format)
 {
 	char				buf[FT_PRINTF_BUF];
